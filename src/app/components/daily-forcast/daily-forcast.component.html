@@ -1,0 +1,44 @@
+<!-- * Daily Forecast -->
+<ng-container *ngIf="city">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>{{ city.name }} </mat-card-title>
+        <mat-card-subtitle class="subtitle">
+          <span>Relative humidity: {{ city.main.humidity }}%</span
+          ><span
+            >Temperature {{ city.main.temp | number : "1.1-1" }}
+          </span></mat-card-subtitle
+        >
+        <div class="buttons">
+          <button
+            (click)="toggleFavorite(city.name)"
+            mat-raised-button
+            color="primary"
+          >
+            <span>{{
+              isCityFavorite ? "Delete from favorite" : "Add to Favorite"
+            }}</span>
+          </button>
+          <button
+            (click)="showForeCast = !showForeCast"
+            mat-raised-button
+            color="primary"
+          >
+            <span>Forecast</span>
+          </button>
+        </div>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      Weather conditions:
+      {{ city.weather[0].description }}
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <ng-container *ngIf="showForeCast">
+      <!-- * Five Days Forecast -->
+      <app-five-days-forecast [searchCity]="city.name" />
+    </ng-container>
+  </mat-card>
+</ng-container>

@@ -1,0 +1,28 @@
+@import "../../../styles/variables.scss";
+
+header {
+  justify-content: space-between;
+  background-color: $c-purple;
+  align-items: center;
+  position: fixed;
+  color: $c-white;
+  padding: 0 20px;
+  display: flex;
+  height: 70px;
+  z-index: 1001;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  margin-right: 5px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
