@@ -1,6 +1,6 @@
 export interface ICityData {
   name: string;
-  main: TCityWeatherData;
+  main: ICityWeatherData;
   weather: ICityWEatherDescription[];
 }
 
@@ -11,4 +11,7 @@ export interface ICityWEatherDescription {
   main: string;
 }
 
-type TCityWeatherData = { temp: number; humidity: number };
+interface ICityWeatherData {
+  temp: number;
+  humidity: number;
+}
