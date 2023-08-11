@@ -1,10 +1,9 @@
 // * Base
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export default class FavoriteService {
+  // * Locale
   favorites: string[] = this.getFavoritesFromLocalStorage();
 
   addToFavorites(city: string) {
@@ -23,10 +22,6 @@ export default class FavoriteService {
 
   isFavorite(city: string): boolean {
     return this.favorites.includes(city);
-  }
-
-  getFavorites(): string[] {
-    return this.favorites;
   }
 
   private getFavoritesFromLocalStorage(): string[] {

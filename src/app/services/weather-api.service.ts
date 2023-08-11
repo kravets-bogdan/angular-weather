@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 // * RxJS
-import { Observable, from, map, mergeMap, toArray } from 'rxjs';
+import { map } from 'rxjs';
 
 // * Types
 import { TForecast, THourlyForecast } from '../types/forecast.types';
@@ -28,13 +28,6 @@ export default class WeatherApiService {
   getCity(city: string) {
     return this.http.get<TCityData>(
       `${this.API}weather?q=${city}&units=metric&appid=${this.apiKey}`
-    );
-  }
-
-  getWeatherForFavorites(favoriteCities: string[]): Observable<any[]> {
-    return from(favoriteCities).pipe(
-      mergeMap((city) => this.getCity(city)),
-      toArray()
     );
   }
 
