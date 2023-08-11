@@ -1,6 +1,6 @@
 // * Base
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Component } from '@angular/core';
 
 // * Material
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     </nav>
   </header>`,
   styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, MatButtonModule],
 })
 export default class HeaderComponent {}

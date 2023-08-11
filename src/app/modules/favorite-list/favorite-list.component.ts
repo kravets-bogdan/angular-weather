@@ -19,6 +19,7 @@ import FavoriteService from 'src/app/services/favorite.service';
   templateUrl: './favorite-list.component.html',
   styleUrls: ['./favorite-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [FavoriteService],
   imports: [NgFor, DailyForcastComponent],
 })
 export default class FavoriteListComponent implements OnInit {

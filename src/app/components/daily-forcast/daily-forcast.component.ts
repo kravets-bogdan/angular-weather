@@ -41,7 +41,7 @@ import FavoriteService from 'src/app/services/favorite.service';
   templateUrl: './daily-forcast.component.html',
   styleUrls: ['./daily-forcast.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [WeatherApiService],
+  providers: [WeatherApiService, FavoriteService],
   imports: [
     ...material,
     FiveDaysForecastComponent,
@@ -73,7 +73,7 @@ export default class DailyForcastComponent implements OnChanges {
   }
 
   protected toggleFavorite(city: string): void {
-    if (this.isFavorite(city)) {
+    if (this.favoriteService.isFavorite(city)) {
       this.favoriteService.removeFromFavorites(city);
     } else {
       this.favoriteService.addToFavorites(city);
@@ -93,10 +93,6 @@ export default class DailyForcastComponent implements OnChanges {
         console.log('error: ', error);
       },
     });
-  }
-
-  private isFavorite(city: string): boolean {
-    return this.favoriteService.isFavorite(city);
   }
 
   private openSnackBar(message: string) {
