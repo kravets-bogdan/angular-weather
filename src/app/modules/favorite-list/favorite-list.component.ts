@@ -1,4 +1,3 @@
-// * Base
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,10 +6,8 @@ import {
 } from '@angular/core';
 import { NgFor } from '@angular/common';
 
-// * Components
 import DailyForcastComponent from '../../components/daily-forcast/daily-forcast.component';
 
-// * Service
 import FavoriteService from 'src/app/services/favorite.service';
 
 @Component({
@@ -23,12 +20,10 @@ import FavoriteService from 'src/app/services/favorite.service';
   imports: [NgFor, DailyForcastComponent],
 })
 export default class FavoriteListComponent implements OnInit {
-  // * Inject
   private readonly favoriteService = inject(FavoriteService);
-  // * Local
   public cities: string[] = [];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.cities = this.favoriteService.favorites;
   }
 }

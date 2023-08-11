@@ -1,4 +1,3 @@
-// * Base
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -11,15 +10,12 @@ import {
 import { NgFor, NgIf, AsyncPipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// * Components
 import SearchCityComponent from '../search-city/search-city.component';
 
-// * Service
 import FiveDaysForecastComponent from '../five-days-forecast/five-days-forecast.component';
 import WeatherApiService from '../../services/weather-api.service';
 import FavoriteService from '../../services/favorite.service';
 
-// * Material
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
@@ -32,8 +28,7 @@ const material = [
   MatCardModule,
 ];
 
-// * Types
-import { ICityData } from '../../core/DTO/interfaces/city.types';
+import { ICityData } from '../../DTO/models/city';
 
 @Component({
   standalone: true,
@@ -54,25 +49,22 @@ import { ICityData } from '../../core/DTO/interfaces/city.types';
   ],
 })
 export default class DailyForcastComponent implements OnChanges {
-  // * Inputs
   @Input({ required: true }) cities: string = '';
-  // * Inject
   private readonly weatherApiService = inject(WeatherApiService);
   private readonly favoriteService = inject(FavoriteService);
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly _snackBar = inject(MatSnackBar);
-  // * Local
   public isCityFavorite: boolean = false;
   public showForeCast: boolean = false;
   public city: ICityData | undefined;
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['cities']) {
       this.loadWeatherData();
     }
   }
 
-  protected toggleFavorite(city: string): void {
+  public toggleFavorite(city: string): void {
     if (this.favoriteService.isFavorite(city)) {
       this.favoriteService.removeFromFavorites(city);
     } else {
@@ -81,7 +73,7 @@ export default class DailyForcastComponent implements OnChanges {
     this.isCityFavorite = !this.isCityFavorite;
   }
 
-  private loadWeatherData() {
+  private loadWeatherData(): void {
     this.weatherApiService.getCity(this.cities).subscribe({
       next: (response) => {
         this.isCityFavorite = this.favoriteService.isFavorite(this.cities);
@@ -90,12 +82,11 @@ export default class DailyForcastComponent implements OnChanges {
       },
       error: (error) => {
         this.openSnackBar(error.message);
-        console.log('error: ', error);
       },
     });
   }
 
-  private openSnackBar(message: string) {
+  private openSnackBar(message: string): void {
     this._snackBar.open(message, 'Close', {
       duration: 3000,
     });

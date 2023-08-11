@@ -1,4 +1,3 @@
-// * Base
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -10,18 +9,15 @@ import {
 } from '@angular/core';
 import { DatePipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 
-// * Services
 import WeatherApiService from 'src/app/services/weather-api.service';
 
-// * Material
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 
 const material = [MatSnackBarModule, MatDividerModule, MatCardModule];
 
-// * Types
-import { IDailyForecast } from '../../core/DTO/interfaces/forecast.types';
+import { IDailyForecast } from '../../DTO/models/forecast';
 
 @Component({
   standalone: true,
@@ -33,22 +29,19 @@ import { IDailyForecast } from '../../core/DTO/interfaces/forecast.types';
   imports: [...material, NgIf, NgFor, DatePipe, DecimalPipe],
 })
 export default class FiveDaysForecastComponent implements OnChanges {
-  // * Inputs
   @Input({ required: true }) searchCity: string = '';
-  // * Inject
   private readonly weatherApiService = inject(WeatherApiService);
   private readonly _snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
-  // * Local
   public fiveDaysForecast: IDailyForecast[] = [];
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['searchCity']) {
       this.getForecast();
     }
   }
 
-  private getForecast() {
+  private getForecast(): void {
     this.weatherApiService.getForecast(this.searchCity).subscribe({
       next: (response) => {
         this.fiveDaysForecast = response;
@@ -56,12 +49,11 @@ export default class FiveDaysForecastComponent implements OnChanges {
       },
       error: (error) => {
         this.openSnackBar(error.message);
-        console.log('error: ', error);
       },
     });
   }
 
-  private openSnackBar(message: string) {
+  private openSnackBar(message: string): void {
     this._snackBar.open(message, 'Close', {
       duration: 3000,
     });

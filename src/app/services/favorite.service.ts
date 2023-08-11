@@ -1,26 +1,24 @@
-// * Base
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export default class FavoriteService {
-  // * Locale
-  favorites: string[] = this.getFavoritesFromLocalStorage();
+  public favorites: string[] = this.getFavoritesFromLocalStorage();
 
-  addToFavorites(city: string) {
+  public addToFavorites(city: string): void {
     if (!this.favorites.includes(city)) {
       this.favorites.push(city);
       this.updateLocalStorage();
     }
   }
 
-  removeFromFavorites(city: string) {
+  public removeFromFavorites(city: string): void {
     if (this.favorites.indexOf(city) !== -1) {
       this.favorites.splice(this.favorites.indexOf(city), 1);
       this.updateLocalStorage();
     }
   }
 
-  isFavorite(city: string): boolean {
+  public isFavorite(city: string): boolean {
     return this.favorites.includes(city);
   }
 
@@ -32,7 +30,7 @@ export default class FavoriteService {
     return [];
   }
 
-  private updateLocalStorage() {
+  private updateLocalStorage(): void {
     localStorage.setItem('favorites', JSON.stringify(this.favorites));
   }
 }

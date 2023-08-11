@@ -1,5 +1,4 @@
-// * Types
-import { ICityWEatherDescription } from './city.types';
+import { ICityWEatherDescription } from './city';
 
 export interface IForecast {
   list: IHourlyForecast[];
@@ -12,9 +11,11 @@ export interface IDailyForecast {
 
 export interface IHourlyForecast {
   dt_txt: string;
-  main: {
-    temp_max: number;
-    temp_min: number;
-  };
+  main: IHourlyForecastMain;
   weather: ICityWEatherDescription[];
+}
+
+interface IHourlyForecastMain {
+  temp_max: number;
+  temp_min: number;
 }

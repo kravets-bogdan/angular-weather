@@ -1,8 +1,6 @@
-// * Base
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-// * Material
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

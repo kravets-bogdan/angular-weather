@@ -1,4 +1,3 @@
-// * Base
 import {
   ChangeDetectionStrategy,
   EventEmitter,
@@ -10,14 +9,11 @@ import {
 import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgFor, AsyncPipe } from '@angular/common';
 
-// * RxJS
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-// * Service
 import WeatherApiService from '../../services/weather-api.service';
 
-// * Material
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -30,7 +26,6 @@ const material = [
   MatInputModule,
 ];
 
-// * Types
 type list = {
   name: string;
 };
@@ -45,17 +40,14 @@ type list = {
   imports: [...material, ReactiveFormsModule, FormsModule, NgFor, AsyncPipe],
 })
 export default class SearchCityComponent implements OnInit {
-  // * Inject
   private readonly weatherApiService = inject(WeatherApiService);
-  // * Outputs
   @Output() selectedCity: EventEmitter<string> = new EventEmitter<string>();
-  // * Local
   public filteredCities: Observable<list[]> | undefined;
   public myControl = new FormControl('');
   private currentIndex: number = 100;
   private list: list[] = [];
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getCities();
     this.filteredCities = this.myControl.valueChanges.pipe(
       startWith(''),
@@ -63,11 +55,11 @@ export default class SearchCityComponent implements OnInit {
     );
   }
 
-  protected getCity(city: string) {
+  public getCity(city: string): void {
     this.selectedCity.emit(city);
   }
 
-  private filter(value: string) {
+  private filter(value: string): list[] {
     const filtered = this.list.filter((city) =>
       city.name.toLowerCase().startsWith(value.toLowerCase())
     );
@@ -75,7 +67,7 @@ export default class SearchCityComponent implements OnInit {
     return filtered.slice(0, this.currentIndex);
   }
 
-  private getCities() {
+  private getCities(): void {
     this.weatherApiService.getAllCities().subscribe({
       next: (response) => {
         this.list = response;

@@ -1,4 +1,3 @@
-<!-- * Daily Forecast -->
 <ng-container *ngIf="city">
   <mat-card>
     <mat-card-header>
@@ -37,7 +36,6 @@
     </mat-card-content>
     <mat-divider></mat-divider>
     <ng-container *ngIf="showForeCast">
-      <!-- * Five Days Forecast -->
       <app-five-days-forecast [searchCity]="city.name" />
     </ng-container>
   </mat-card>

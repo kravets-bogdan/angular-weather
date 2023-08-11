@@ -1,9 +1,7 @@
-<!-- * Search city -->
 <app-search-city (selectedCity)="weatherCity($event)"></app-search-city>
 
 <mat-divider></mat-divider>
 
-<!-- * Daily Forecast -->
 <ng-container *ngIf="cityName">
   <app-daily-forcast [cities]="cityName"></app-daily-forcast>
 </ng-container>
