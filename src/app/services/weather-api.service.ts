@@ -2,12 +2,18 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+// * Enviroment
+import { environment } from '../../environments/environment';
+
 // * RxJS
 import { map } from 'rxjs';
 
 // * Types
-import { TForecast, THourlyForecast } from '../types/forecast.types';
-import { TCityData } from '../types/city.types';
+import {
+  IHourlyForecast,
+  IForecast,
+} from '../core/DTO/interfaces/forecast.types';
+import { ICityData } from '../core/DTO/interfaces/city.types';
 
 type TCities = {
   name: string;
@@ -17,32 +23,27 @@ type TCities = {
 export default class WeatherApiService {
   // * Inject
   private readonly http = inject(HttpClient);
-  // * local
-  private readonly apiKey = '36c415082cd1b09d49c15ce6dc314676';
-  private readonly API = 'https://api.openweathermap.org/data/2.5/';
 
   getAllCities() {
     return this.http.get<TCities[]>('../assets/city.list.json');
   }
 
   getCity(city: string) {
-    return this.http.get<TCityData>(
-      `${this.API}weather?q=${city}&units=metric&appid=${this.apiKey}`
+    return this.http.get<ICityData>(
+      `${environment.openWeatherMapAPI}weather?q=${city}`
     );
   }
 
   getForecast(city: string) {
     return this.http
-      .get<TForecast>(
-        `${this.API}forecast?q=${city}&units=metric&appid=${this.apiKey}`
-      )
+      .get<IForecast>(`${environment.openWeatherMapAPI}forecast?q=${city}`)
       .pipe(
         map((response) => {
           const dailyForecasts: {
             date: string;
-            hourlyForecasts: THourlyForecast[];
+            hourlyForecasts: IHourlyForecast[];
           }[] = [];
-          const hourlyForecastsMap = new Map<string, THourlyForecast[]>();
+          const hourlyForecastsMap = new Map<string, IHourlyForecast[]>();
 
           response.list.forEach((forecast) => {
             const date = forecast.dt_txt.split(' ')[0];

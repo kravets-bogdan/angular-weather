@@ -21,7 +21,7 @@ import { MatCardModule } from '@angular/material/card';
 const material = [MatSnackBarModule, MatDividerModule, MatCardModule];
 
 // * Types
-import { TDailyForecast } from 'src/app/types/forecast.types';
+import { IDailyForecast } from '../../core/DTO/interfaces/forecast.types';
 
 @Component({
   standalone: true,
@@ -40,7 +40,7 @@ export default class FiveDaysForecastComponent implements OnChanges {
   private readonly _snackBar = inject(MatSnackBar);
   private readonly cdr = inject(ChangeDetectorRef);
   // * Local
-  public fiveDaysForecast: TDailyForecast[] = [];
+  public fiveDaysForecast: IDailyForecast[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['searchCity']) {

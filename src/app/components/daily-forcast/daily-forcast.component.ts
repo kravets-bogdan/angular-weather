@@ -17,6 +17,7 @@ import SearchCityComponent from '../search-city/search-city.component';
 // * Service
 import FiveDaysForecastComponent from '../five-days-forecast/five-days-forecast.component';
 import WeatherApiService from '../../services/weather-api.service';
+import FavoriteService from '../../services/favorite.service';
 
 // * Material
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -32,8 +33,7 @@ const material = [
 ];
 
 // * Types
-import { TCityData } from 'src/app/types/city.types';
-import FavoriteService from 'src/app/services/favorite.service';
+import { ICityData } from '../../core/DTO/interfaces/city.types';
 
 @Component({
   standalone: true,
@@ -64,7 +64,7 @@ export default class DailyForcastComponent implements OnChanges {
   // * Local
   public isCityFavorite: boolean = false;
   public showForeCast: boolean = false;
-  public city: TCityData | undefined;
+  public city: ICityData | undefined;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['cities']) {
